@@ -1,6 +1,13 @@
 pipeline {
     agent any
     stages {
+        stage('Checkout') {
+            steps {
+                git branch: 'main', 
+                url: 'https://github.com/your-username/your-repo.git',
+                credentialsId: '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' // Use the ID you specified in Jenkins
+            }
+        }
         stage('Build') {
             steps {
                 sh 'mvn clean package'
@@ -8,7 +15,7 @@ pipeline {
         }
         stage('Deploy') {
             steps {
-                sh 'scp target/jsp-project.war ec2-user@your-ec2-public-ip:/opt/tomcat/webapps/'
+                sh 'scp target/your-app.war ec2-user@your-ec2-public-ip:/opt/tomcat/webapps/'
             }
         }
     }
